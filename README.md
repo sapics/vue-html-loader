@@ -1,4 +1,6 @@
-# html loader for webpack
+# vue-html-loader
+
+> This is a fork of the webpack html-loader with some parser improvements and some Vue.js specific fixes. Used by vue-loader as a peer dependency. Usage is exactly the same with the original html-loader.
 
 Exports HTML as string. HTML is minimized when the compiler demands.
 

@@ -1,6 +1,6 @@
 {
-  "name": "html-loader",
-  "version": "0.3.0",
+  "name": "vue-html-loader",
+  "version": "1.0.0",
   "author": "Tobias Koppers @sokra",
   "description": "html loader module for webpack",
   "dependencies": {

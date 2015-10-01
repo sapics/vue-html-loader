@@ -12,7 +12,6 @@ function randomIdent() {
 	return "xxxHTMLLINKxxx" + Math.random() + Math.random() + "xxx";
 };
 
-
 module.exports = function(content) {
 	this.cacheable && this.cacheable();
 	var query = loaderUtils.parseQuery(this.query);
@@ -65,7 +64,9 @@ module.exports = function(content) {
 			removeRedundantAttributes: query.removeRedundantAttributes !== false,
 			useShortDoctype: query.useShortDoctype !== false,
 			removeEmptyAttributes: query.removeEmptyAttributes !== false,
-			removeOptionalTags: query.removeOptionalTags !== false
+			removeOptionalTags: query.removeOptionalTags !== false,
+			// required for Vue 1.0 shorthand syntax
+			customAttrSurround: [[/@/, new RegExp('')], [/:/, new RegExp('')]]
 		});
 	}
 	return "module.exports = " + JSON.stringify(content).replace(/xxxHTMLLINKxxx[0-9\.]+xxx/g, function(match) {

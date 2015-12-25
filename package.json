@@ -4,10 +4,11 @@
   "author": "Tobias Koppers @sokra",
   "description": "html loader module for webpack",
   "dependencies": {
-    "html-minifier": "^0.8.0",
+    "html-minifier": "^1.0.1",
     "source-map": "^0.5.1",
     "fastparse": "^1.1.1",
-    "loader-utils": "^0.2.11"
+    "loader-utils": "^0.2.11",
+    "object-assign": "^4.0.1"
   },
   "devDependencies": {
     "mocha": "1.17.x",

@@ -6,6 +6,7 @@ var htmlMinifier = require("html-minifier");
 var attrParse = require("./lib/attributesParser");
 var SourceNode = require("source-map").SourceNode;
 var loaderUtils = require("loader-utils");
+var assign = require("object-assign");
 var url = require("url");
 
 function randomIdent() {
@@ -35,7 +36,7 @@ module.exports = function(content) {
 	content = [content];
 	links.forEach(function(link) {
 		if(!loaderUtils.isUrlRequest(link.value, root)) return;
-        
+
 		var uri = url.parse(link.value);
 		if (uri.hash !== null && uri.hash !== undefined) {
 		    uri.hash = null;
@@ -43,7 +44,6 @@ module.exports = function(content) {
 		    link.length = link.value.length;
 		}
 
-        
 		do {
 			var ident = randomIdent();
 		} while(data[ident]);
@@ -56,18 +56,27 @@ module.exports = function(content) {
 	content.reverse();
 	content = content.join("");
 	if(typeof query.minimize === "boolean" ? query.minimize : this.minimize) {
-		content = htmlMinifier.minify(content, {
-			removeComments: query.removeComments !== false,
-			collapseWhitespace: query.collapseWhitespace !== false,
-			collapseBooleanAttributes: query.collapseBooleanAttributes !== false,
-			removeAttributeQuotes: query.removeAttributeQuotes !== false,
-			removeRedundantAttributes: query.removeRedundantAttributes !== false,
-			useShortDoctype: query.useShortDoctype !== false,
-			removeEmptyAttributes: query.removeEmptyAttributes !== false,
-			removeOptionalTags: query.removeOptionalTags !== false,
+		var minimizeOptions = assign({
 			// required for Vue 1.0 shorthand syntax
 			customAttrSurround: [[/@/, new RegExp('')], [/:/, new RegExp('')]]
+		}, query);
+
+		[
+			"removeComments",
+			"collapseWhitespace",
+			"collapseBooleanAttributes",
+			"removeAttributeQuotes",
+			"removeRedundantAttributes",
+			"useShortDoctype",
+			"removeEmptyAttributes",
+			"removeOptionalTags"
+		].forEach(function(name) {
+			if (typeof minimizeOptions[name] === "undefined") {
+				minimizeOptions[name] = true;
+			}
 		});
+
+		content = htmlMinifier.minify(content, minimizeOptions);
 	}
 	return "module.exports = " + JSON.stringify(content).replace(/xxxHTMLLINKxxx[0-9\.]+xxx/g, function(match) {
 		if(!data[match]) return match;

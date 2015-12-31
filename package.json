@@ -4,8 +4,8 @@
   "author": "Tobias Koppers @sokra",
   "description": "html loader module for webpack",
   "dependencies": {
-    "html-minifier": "^0.8.0",
-    "source-map": "^0.5.1",
+    "html-minifier": "^1.0.0",
+    "source-map": "^0.5.3",
     "fastparse": "^1.1.1",
     "loader-utils": "^0.2.11"
   },

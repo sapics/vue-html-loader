@@ -1,6 +1,6 @@
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
+	Authors Tobias Koppers @sokra, Evan You @yyx990803
 */
 var htmlMinifier = require("html-minifier");
 var attrParse = require("./lib/attributesParser");
@@ -57,6 +57,9 @@ module.exports = function(content) {
 	content = content.join("");
 	if(typeof query.minimize === "boolean" ? query.minimize : this.minimize) {
 		var minimizeOptions = assign({
+			// this flag remove "type" in <input type="text">, and is only enabled
+			// when the user explicitly wants it.
+			removeRedundantAttributes: !!query.removeRedundantAttributes,
 			// required for Vue 1.0 shorthand syntax
 			customAttrSurround: [[/@/, new RegExp('')], [/:/, new RegExp('')]]
 		}, query);
